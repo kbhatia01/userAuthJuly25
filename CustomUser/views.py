@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.template.defaulttags import csrf_token
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from oauth2_provider.decorators import protected_resource
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -69,3 +70,12 @@ def login(request):
             content_type='application/json',
             status=405
         )
+
+
+@protected_resource()
+def hello_world(request):
+    return HttpResponse(
+        json.dumps({'message': 'Hello World'}),
+        content_type='application/json',
+        status=200
+    )
